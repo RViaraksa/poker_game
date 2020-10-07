@@ -84,6 +84,16 @@ public class Combination {
         if ((array[4] - array[0]) == 4) res = true;
         return res;
     }
+    
+    /**
+     cardList.sort(Comparator.comparing(Integer::CardWeight.getCardWeight).reversed());
+     или 
+     Collections.sort(testList, (a, b) -> b.compareTo(a));
+     Comparator<Double> comp = (Double a, Double b) -> {
+        return b.compareTo(a);
+    };
+    https://overcoder.net/q/22564/как-отсортировать-arraylist
+    */
 
 
     /**
