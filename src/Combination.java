@@ -71,6 +71,16 @@ public class Combination {
      */
     private boolean findSequence(List<Card> cardList){
         boolean res = false;
+        /**
+        cardList.sort((Card c1, Card c2) -> 
+            c2.getCardWeight().getWeight() - c1.getCardWeight().getWeight() );
+            //c1.getCardWeight().getWeight().compareTo(c2.getCardWeight().getWeight())
+        */
+        /**
+        Collection.sort(cardList , (c1, c2) -> 
+            c2.getCardWeight().getWeight() - c1.getCardWeight().getWeight() );
+            //c1.getCardWeight().getWeight().compareTo(c2.getCardWeight().getWeight())
+        */
         int[] array = new int[5];
         int j = 0;
         for (Card i:cardList) {
@@ -82,6 +92,9 @@ public class Combination {
             }
         }
         if ((array[4] - array[0]) == 4) res = true;
+        /**
+        if (cardList(4)-cardList(0) == 4) res = true;
+        */
         return res;
     }
     
