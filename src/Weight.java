@@ -8,7 +8,7 @@ public enum Weight {
         this.cardWeight = i;
     }
 
-    public int getCardWeight() {
+    public int getWeight() {
         return cardWeight;
     }
 }
