@@ -18,8 +18,8 @@ public class Crypic {
         } catch (LowCardInDechException e) {
             e.printStackTrace();
         }
-        Combination cp1 = new Combination();
-        Combination cp2 = new Combination();
+        Combination cp1 = new Combination();                                        //создать поле Combination в player и 
+        Combination cp2 = new Combination();                                        //выполнятьвызов метода returnCombination из самого player
         Combination cp3 = new Combination();
         try {
            cp1.returnCombination(p1.getCards());
