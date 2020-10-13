@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -13,7 +14,8 @@ public class Player {
     }
 
     public List<Card> getCards() {
-        return cards;
+        List<Card> copy= new ArrayList<>(cards);
+        return copy;
     }
 
     public void setCards(List<Card> cards) {

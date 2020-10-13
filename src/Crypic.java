@@ -25,7 +25,7 @@ public class Crypic {
            cp1.returnCombination(p1.getCards());
            cp2.returnCombination(p2.getCards());
            cp3.returnCombination(p3.getCards());
-
+           cp1.returnCombination(p1.getCards());
 
         } catch (CrowedLimitCardException e) {
             e.printStackTrace();

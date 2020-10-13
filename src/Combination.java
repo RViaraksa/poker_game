@@ -10,7 +10,7 @@ public class Combination {
      */
     public void returnCombination (List<Card> cardList) throws CrowedLimitCardException {
         boolean flag = true;                                                     //флажок для входа в цикл 2
-        if (cardList.size() > 5) throw new CrowedLimitCardException();
+        if (cardList.size() > 6) throw new CrowedLimitCardException();
 
         /*цикл 1
         вызываются аннимные методы класса возращающие булевские значения при нахождении
@@ -102,7 +102,6 @@ public class Combination {
         for (Card i : cardList) {
             if (i.suit.getSuitName() != defSuit.getSuitName())
                 res = false;
-            break;
         }
         return res;
     }

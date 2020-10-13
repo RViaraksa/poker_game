@@ -20,7 +20,7 @@ public class Dech {
     public List<Card> giveFiveCardToPlayer() throws LowCardInDechException {     //метод раздает игроку пять карт
         if (dush.size() < 5) throw new LowCardInDechException();
         List<Card> playerCard = new ArrayList<>();
-        for (int i = 0; i >= 5; i++) {
+        for (int i = 0; i < 5; i++) {
             playerCard.add(dush.poll());                                //метод возращает и удаляет эхлемент и очереди
         }
         return playerCard;
