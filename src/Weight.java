@@ -11,4 +11,5 @@ public enum Weight {
     public int getWeight() {
         return cardWeight;
     }
+
 }

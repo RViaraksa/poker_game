@@ -10,7 +10,7 @@ public class Combination {
      */
     public void returnCombination (List<Card> cardList) throws CrowedLimitCardException {
         boolean flag = true;                                                     //флажок для входа в цикл 2
-        if (cardList.size() > 6) throw new CrowedLimitCardException();
+        if (cardList.size() > 5) throw new CrowedLimitCardException();           //если размер колоды карт у игрока больше 5 ошибка
 
         /*цикл 1
         вызываются аннимные методы класса возращающие булевские значения при нахождении
@@ -22,7 +22,6 @@ public class Combination {
             flag = false;
             if (findSequence(cardList)){
                 switch (cheeckBiggestWeight(cardList)){
-
                     case  ACE:
                         this.combinationName = CombinationName.FLUSH_ROYAL;
                         break;
@@ -30,47 +29,53 @@ public class Combination {
                         this.combinationName = CombinationName.STRAIGHT_FLUSH;
                 }
             }
-            else this.combinationName = CombinationName.FLUSH;
+            else {
+                this.combinationName = CombinationName.FLUSH;
+            }
         }
 
         /*цикл 2*/
-        if (findSequence(cardList)){
-            flag = false;
-            this.combinationName = CombinationName.STRAIGHT;
+        if (flag){
+            if (findSequence(cardList)){
+                flag = false;
+                this.combinationName = CombinationName.STRAIGHT;
+            }
         }
+
 
         /*цикл 3*/
         if (flag) {
             block:{
-                flag = false;
                 for (Map.Entry<Integer, Integer> entry : checkWeight(cardList).entrySet()) {             //специальный метод entrySet() перебирает все элементы мэпы
                     /**у игрока находиться карта одного значения в 2-ух и более экземплярах (2...4X)*/
                     if (checkWeight(cardList).size() == 1) {
+                        flag = false;
                         this.weight = entry.getKey();                               //велечину карты передаем числом в приватное поле
                         switch (entry.getValue()) {                                 // свитч на количество совпавших карт
                             case 2:
                                 this.combinationName = CombinationName.PAIR;
-                                this.weight = entry.getValue();
+                                this.weight = entry.getKey();
                                 break;
                             case 3:
                                 this.combinationName = CombinationName.THREE_OF_KIND;
-                                this.weight = entry.getValue();
+                                this.weight = entry.getKey();
                                 break;
                             case 4:
                                 this.combinationName = CombinationName.FOUR_A_KIND;
-                                this.weight = entry.getValue();
+                                this.weight = entry.getKey();
                                 break;
                         }
                     }
                     /**у игрока 2 значения карт где 2 и более совпадения : (2Y 2X) (2Y 3X)*/
                     else if (checkWeight(cardList).size() == 2) {
+                        flag = false;
                         if (entry.getValue() == 2) {
                             this.combinationName = CombinationName.TWO_PAIR;
-                            if (this.weight < entry.getValue()) this.weight = entry.getValue();
+                            if (this.weight < entry.getValue()) this.weight = entry.getKey();
                         }
                         if (entry.getValue() == 3) {                                             //в эту часть цикла программа зайдёт только при наличии 3 карт, при этом перезапишет имя комбинации
                             this.combinationName = CombinationName.FULL_OF_HOUSE;
-                            if (this.weight < entry.getValue()) this.weight = entry.getValue();
+                            if (this.weight < entry.getValue()) this.weight = entry.getKey();
                             break block;                                                         //если попали сразу на элемент мэпы хранящий 3 карты то записываем название комбинации и закрываем блок, прим. смотри перед гл. if()
                         }
                     }
@@ -118,18 +123,18 @@ public class Combination {
         Map<Integer, Integer> res = new HashMap<>();
         List<Card> copyList = new ArrayList<>(cardList);
         for (int j = 0; j < copyList.size(); j++) {
-            for (int i = j + 1; j < copyList.size(); j++) {
-                int count = 1;
-                if (copyList.get(j).equals(copyList.get(i))) {
+            int count = 1;
+            for (int i = j + 1; i < copyList.size(); i++) {
+                if (copyList.get(j).getCardWeight().equals(copyList.get(i).getCardWeight())) {
                     count++;                                                    //счётчик считает количество совпадений карт одного значения
                     res.put(copyList.get(j).cardWeight.getWeight(),count);
                     copyList.remove(i);
+                    i--;
                 }
             }
         }
         return res;
     }
-
 
     /**
      * метод возращает старшую карту из листа
@@ -166,7 +171,7 @@ public class Combination {
          //c1.getCardWeight().getWeight().compareTo(c2.getCardWeight().getWeight())
          */
         cardList.sort((Card c1, Card c2) ->
-                c2.getCardWeight().getWeight() - c1.getCardWeight().getWeight());
+                -(c2.getCardWeight().getWeight() - c1.getCardWeight().getWeight()));
        /* int[] array = new int[5];
         int j = 0;
         for (Card i : cardList) {
